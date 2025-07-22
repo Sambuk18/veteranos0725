@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lista de Aportes</h1>
+<a href="{{ url_for('aportes_bp.add_aporte') }}">Añadir Aporte</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>DNI Dirigente</th>
+            <th>Monto</th>
+            <th>Fecha Aporte</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aporte in aportes %}
+        <tr>
+            <td>{{ aporte.id_aporte }}</td>
+            <td>{{ aporte.DNI_dirigente }}</td>
+            <td>{{ aporte.monto }}</td>
+            <td>{{ aporte.fecha_aporte }}</td>
+            <td>{{ aporte.motivo }}</td>
+            <td>
+                <a href="{{ url_for('aportes_bp.edit_aporte', id=aporte.id_aporte) }}">Editar</a>
+                <form action="{{ url_for('aportes_bp.delete_aporte', id=aporte.id_aporte) }}" method="post" style="display:inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

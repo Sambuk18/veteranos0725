@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Aporte</h1>
+<form action="{{ url_for('aportes_bp.add_aporte') }}" method="post">
+    <label for="DNI_dirigente">DNI Dirigente:</label>
+    <select name="DNI_dirigente" id="DNI_dirigente">
+        {% for dirigente in dirigentes %}
+        <option value="{{ dirigente.DNI }}">{{ dirigente.DNI }} - {{ dirigente.nombre }} {{ dirigente.apellido }}</option>
+        {% endfor %}
+    </select>
+    <label for="monto">Monto:</label>
+    <input type="text" name="monto" id="monto">
+    <label for="fecha_aporte">Fecha Aporte:</label>
+    <input type="date" name="fecha_aporte" id="fecha_aporte">
+    <label for="motivo">Motivo:</label>
+    <textarea name="motivo" id="motivo"></textarea>
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Equipo</h1>
+<form action="{{ url_for('equipos_bp.add_equipo') }}" method="post">
+    <label for="nombre_equipo">Nombre Equipo:</label>
+    <input type="text" name="nombre_equipo" id="nombre_equipo">
+    <label for="fecha_creacion">Fecha Creación:</label>
+    <input type="date" name="fecha_creacion" id="fecha_creacion">
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

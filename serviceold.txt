@@ -1,0 +1,17 @@
+
+
+[Unit]
+Description=Gunicorn instance to serve Veteranos Flask App
+After=network.target
+
+[Service]
+User=veteranos_app_user
+# Mantén esto como 'nogroup' (o 'www-data' si lo probaste y funcionó). El problema anterior era 216/GROUP.
+Group=veteranos_app_user
+WorkingDirectory=/var/www/veteranos_app/sistema
+Environment="PATH=/var/www/veteranos_app/venv/bin"
+ExecStart=/var/www/veteranos_app/sistema/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 sistema.app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

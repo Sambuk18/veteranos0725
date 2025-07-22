@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Editar Árbitro</h1>
+<form action="{{ url_for('arbitros_bp.edit_arbitro', DNI=arbitro.DNI) }}" method="post">
+    <label for="DNI">DNI:</label>
+    <input type="text" name="DNI" id="DNI" value="{{ arbitro.DNI }}" readonly>
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" value="{{ arbitro.nombre }}">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido" value="{{ arbitro.apellido }}">
+    <label for="licencia">Licencia:</label>
+    <input type="text" name="licencia" id="licencia" value="{{ arbitro.licencia }}">
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

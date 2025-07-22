@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Árbitro</h1>
+<form action="{{ url_for('arbitros_bp.add_arbitro') }}" method="post">
+    <label for="DNI">DNI:</label>
+    <input type="text" name="DNI" id="DNI">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido">
+    <label for="licencia">Licencia:</label>
+    <input type="text" name="licencia" id="licencia">
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

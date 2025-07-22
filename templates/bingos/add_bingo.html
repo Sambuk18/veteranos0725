@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Bingo</h1>
+<form action="{{ url_for('bingos_bp.add_bingo') }}" method="post">
+    <label for="fecha">Fecha:</label>
+    <input type="date" name="fecha" id="fecha" required>
+    
+    <label for="ubicacion">Ubicación:</label>
+    <input type="text" name="ubicacion" id="ubicacion">
+    
+    <label for="DNI_vendedor">DNI Vendedor:</label>
+    <select name="DNI_vendedor" id="DNI_vendedor" required>
+        {% for vendedor in vendedores %}
+        <option value="{{ vendedor.DNI }}">{{ vendedor.DNI }} - {{ vendedor.nombre }} {{ vendedor.apellido }}</option>
+        {% endfor %}
+    </select>
+    
+    <label for="DNI_comprador">DNI Comprador:</label>
+    <input type="text" name="DNI_comprador" id="DNI_comprador" required>
+    
+    <label for="anocarton">Año del Cartón:</label>
+    <input type="number" name="anocarton" id="anocarton">
+    
+    <label for="Nrocarton">Número del Cartón (4 dígitos):</label>
+    <input type="number" name="Nrocarton" id="Nrocarton" min="0000" max="3999">
+    
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

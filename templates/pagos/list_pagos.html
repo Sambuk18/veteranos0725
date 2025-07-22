@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Pagos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Gestión de Pagos</h2>
+    <h5>Buscar Jugador</h5>
+    <form id="buscarJugadorForm" class="row g-2 mb-2">
+        <div class="col-md-4">
+            <input type="text" id="filtro_jugador" name="filtro_jugador" class="form-control" placeholder="DNI, nombre o apellido">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-info">Buscar</button>
+        </div>
+    </form>
+
+    <div id="resultadosJugadores" class="mb-3"></div>
+
+    <form method="post" class="row g-2 mb-3">
+        <input type="hidden" name="id_pago" id="id_pago">
+
+        <div class="col-md-2">
+            <input type="text" class="form-control" name="DNI_jugador" placeholder="DNI jugador" required>
+        </div>
+        <div class="col-md-1">
+            <input type="number" step="0.01" class="form-control" name="monto" placeholder="Monto" required>
+        </div>
+        <div class="col-md-2">
+            <input type="date" class="form-control" id="fecha_pago" name="fecha_pago" required>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="tipo_pago" required>
+                <option value="" disabled selected>Seleccione tipo de pago</option>
+                <option value="EFECTIVO">EFECTIVO</option>
+                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                <option value="MERCADO PAGO">MERCADO PAGO</option>
+                <option value="OTRO">OTRO</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" name="Serie" placeholder="Serie" required>
+        </div>
+        <div class="col-md-1">
+            <input type="number" class="form-control" name="NroRec" placeholder="Recibo">
+        </div>
+        <div class="col-md-1">
+            <input type="number" class="form-control" name="NroCarton" placeholder="Cartón">
+        </div>
+
+        <div class="col-12 d-flex flex-wrap gap-2 mt-2">
+            <button type="submit" name="agregar" class="btn btn-success">Agregar</button>
+            <button type="submit" name="editar" class="btn btn-primary">Editar</button>
+            <button type="submit" name="borrar" class="btn btn-danger">Borrar</button>
+            <input type="text" name="filtro" placeholder="Buscar por DNI" class="form-control w-auto">
+            <button type="submit" name="buscar" class="btn btn-secondary">Buscar</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <h4>Listado de Pagos</h4>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DNI Jugador</th>
+                <th>Monto</th>
+                <th>Fecha Pago</th>
+                <th>Tipo</th>
+                <th>Serie</th>
+                <th>Recibo</th>
+                <th>Cartón</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.id_pago }}</td>
+                <td>{{ pago.DNI_jugador }}</td>
+                <td>{{ pago.monto }}</td>
+                <td>{{ pago.fecha_pago }}</td>
+                <td>{{ pago.tipo_pago }}</td>
+                <td>{{ pago.Serie }}</td>
+                <td>{{ pago.NroRec }}</td>
+                <td>{{ pago.NroCarton }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+document.getElementById('buscarJugadorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const filtro = document.getElementById('filtro_jugador').value;
+    fetch('/buscar_jugador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `filtro_jugador=${encodeURIComponent(filtro)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        const contenedor = document.getElementById('resultadosJugadores');
+        contenedor.innerHTML = '';
+
+        if (data.error) {
+            contenedor.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+        } else if (data.jugadores.length === 1) {
+            const j = data.jugadores[0];
+            document.querySelector('input[name="DNI_jugador"]').value = j.DNI;
+            contenedor.innerHTML = `
+                <div class="alert alert-success">
+                    Jugador seleccionado: <strong>${j.nombre} ${j.apellido}</strong> (DNI: ${j.DNI})
+                </div>
+            `;
+        } else {
+            let html = `<label>Seleccione un jugador:</label><select id="selectorJugador" class="form-select mb-2">`;
+            html += `<option disabled selected>-- Elegir jugador --</option>`;
+            data.jugadores.forEach(j => {
+                html += `<option value="${j.DNI}">
+                    ${j.nombre} ${j.apellido} (DNI: ${j.DNI}) - ${j.correo || 'sin correo'}
+                </option>`;
+            });
+            html += `</select>`;
+            contenedor.innerHTML = html;
+
+            document.getElementById('selectorJugador').addEventListener('change', function() {
+                const dniSeleccionado = this.value;
+                document.querySelector('input[name="DNI_jugador"]').value = dniSeleccionado;
+            });
+        }
+    });
+});
+
+window.addEventListener('DOMContentLoaded', function () {
+    const inputFecha = document.getElementById('fecha_pago');
+    if (!inputFecha.value) {
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dd = String(hoy.getDate()).padStart(2, '0');
+        inputFecha.value = `${yyyy}-${mm}-${dd}`;
+    }
+});
+</script>
+
+{% endblock %}

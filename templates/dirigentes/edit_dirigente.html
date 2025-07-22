@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Editar Dirigente</h1>
+<form action="{{ url_for('dirigentes_bp.edit_dirigente', DNI=dirigente.DNI) }}" method="post">
+    <label for="DNI">DNI:</label>
+    <input type="text" name="DNI" id="DNI" value="{{ dirigente.DNI }}" readonly>
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" value="{{ dirigente.nombre }}">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido" value="{{ dirigente.apellido }}">
+    <label for="cargo">Cargo:</label>
+    <input type="text" name="cargo" id="cargo" value="{{ dirigente.cargo }}">
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

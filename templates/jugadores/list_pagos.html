@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lista de Pagos</h1>
+<a href="{{ url_for('pagos_bp.add_pago') }}">Añadir Pago</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>DNI Jugador</th>
+            <th>Monto</th>
+            <th>Fecha Pago</th>
+            <th>Tipo Pago</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pago in pagos %}
+        <tr>
+            <td>{{ pago.id_pago }}</td>
+            <td>{{ pago.DNI_jugador }}</td>
+            <td>{{ pago.monto }}</td>
+            <td>{{ pago.fecha_pago }}</td>
+            <td>{{ pago.tipo_pago }}</td>
+            <td>
+                <a href="{{ url_for('pagos_bp.edit_pago', id=pago.id_pago) }}">Editar</a>
+                <form action="{{ url_for('pagos_bp.delete_pago', id=pago.id_pago) }}" method="post" style="display:inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

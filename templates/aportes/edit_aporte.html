@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Editar Aporte</h1>
+<form action="{{ url_for('aportes_bp.edit_aporte', id=aporte.id_aporte) }}" method="post">
+    <label for="DNI_dirigente">DNI Dirigente:</label>
+    <select name="DNI_dirigente" id="DNI_dirigente">
+        {% for dirigente in dirigentes %}
+        <option value="{{ dirigente.DNI }}" {% if dirigente.DNI == aporte.DNI_dirigente %}selected{% endif %}>{{ dirigente.DNI }} - {{ dirigente.nombre }} {{ dirigente.apellido }}</option>
+        {% endfor %}
+    </select>
+    <label for="monto">Monto:</label>
+    <input type="text" name="monto" id="monto" value="{{ aporte.monto }}">
+    <label for="fecha_aporte">Fecha Aporte:</label>
+    <input type="date" name="fecha_aporte" id="fecha_aporte" value="{{ aporte.fecha_aporte }}">
+    <label for="motivo">Motivo:</label>
+    <textarea name="motivo" id="motivo">{{ aporte.motivo }}</textarea>
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

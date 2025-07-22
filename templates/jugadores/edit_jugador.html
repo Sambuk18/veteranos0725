@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Editar Jugador</h1>
+<form action="{{ url_for('jugadores_bp.edit_jugador', DNI=jugador.DNI) }}" method="post">
+    <label for="DNI">DNI:</label>
+    <input type="text" name="DNI" id="DNI" value="{{ jugador.DNI }}" readonly>
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" value="{{ jugador.nombre }}">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido" value="{{ jugador.apellido }}">
+    <label for="fecha_nac">Fecha Nacimiento:</label>
+    <input type="date" name="fecha_nac" id="fecha_nac" value="{{ jugador.fecha_nac }}">
+    <label for="telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="telefono" value="{{ jugador.telefono }}">
+    <label for="correo">Correo:</label>
+    <input type="email" name="correo" id="correo" value="{{ jugador.correo }}">
+    <label for="id_equipo">Equipo:</label>
+    <select name="id_equipo" id="id_equipo">
+        {% for equipo in equipos %}
+        <option value="{{ equipo.id_equipo }}" {% if equipo.id_equipo == jugador.id_equipo %}selected{% endif %}>{{ equipo.nombre_equipo }}</option>
+        {% endfor %}
+    </select>
+    <label for="id_categoria">Categoría:</label>
+    <select name="id_categoria" id="id_categoria">
+        {% for categoria in categorias %}
+        <option value="{{ categoria.id_categoria }}" {% if categoria.id_categoria == jugador.id_categoria %}selected{% endif %}>{{ categoria.nombre_categoria }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

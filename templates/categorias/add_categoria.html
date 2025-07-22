@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Categoría</h1>
+<form action="{{ url_for('categorias_bp.add_categoria') }}" method="post">
+    <label for="nombre_categoria">Nombre Categoría:</label>
+    <input type="text" name="nombre_categoria" id="nombre_categoria">
+    <label for="descripcion">Descripción:</label>
+    <textarea name="descripcion" id="descripcion"></textarea>
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

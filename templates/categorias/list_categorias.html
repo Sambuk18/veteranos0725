@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lista de Categorías</h1>
+<a href="{{ url_for('categorias_bp.add_categoria') }}">Añadir Categoría</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Categoría</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{ categoria.id_categoria }}</td>
+            <td>{{ categoria.nombre_categoria }}</td>
+            <td>{{ categoria.descripcion }}</td>
+            <td>
+                <a href="{{ url_for('categorias_bp.edit_categoria', id=categoria.id_categoria) }}">Editar</a>
+                <form action="{{ url_for('categorias_bp.delete_categoria', id=categoria.id_categoria) }}" method="post" style="display:inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

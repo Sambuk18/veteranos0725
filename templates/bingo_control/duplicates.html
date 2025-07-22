@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Recibos y Cartones Duplicados</h2>
+    
+    <div class="row">
+        <!-- Recibos Duplicados -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Recibos Duplicados</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Número de Recibo</th>
+                                    <th>Cantidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for recibo in recibo_duplicates %}
+                                <tr>
+                                    <td>{{ recibo.recibo_nro }}</td>
+                                    <td>{{ recibo.count }}</td>
+                                    <td>
+                                        <a href="{{ url_for('bingo_control.index') }}?recibo_nro={{ recibo.recibo_nro }}" 
+                                           class="btn btn-sm btn-primary">
+                                            <i class="fas fa-search"></i> Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">No hay recibos duplicados</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cartones Duplicados -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Cartones Duplicados</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Número de Cartón</th>
+                                    <th>Cantidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for carton in carton_duplicates %}
+                                <tr>
+                                    <td>{{ carton.carton_nro }}</td>
+                                    <td>{{ carton.count }}</td>
+                                    <td>
+                                        <a href="{{ url_for('bingo_control.index') }}?carton_nro={{ carton.carton_nro }}" 
+                                           class="btn btn-sm btn-primary">
+                                            <i class="fas fa-search"></i> Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">No hay cartones duplicados</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('bingo_control.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver al listado
+        </a>
+    </div>
+</div>
+{% endblock %}

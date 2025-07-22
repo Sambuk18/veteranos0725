@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veteranos SP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('aportes_bp.view_aportes') }}">Aportes</a></li>
+            <li><a href="{{ url_for('arbitros_bp.view_arbitros') }}">Arbitros</a></li>            
+            <!-- Menú con submenú -->
+            <li class="dropdown {% if active_page in ['bingos', 'bingo_control'] %}active{% endif %}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Bingos <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{% if active_page == 'bingos' %}active{% endif %}">
+                        <a href="{{ url_for('bingos_bp.view_bingos') }}">Ver Bingos</a>
+                    </li>
+                    <li class="{% if active_page == 'bingo_control' %}active{% endif %}">
+                        <a href="{{ url_for('bingo_control.index') }}">
+                            <i class="fas fa-ticket-alt"></i> Control Bingo
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="{{ url_for('categorias_bp.view_categorias') }}">Categorias</a></li>
+            <li><a href="{{ url_for('dirigentes_bp.view_dirigentes') }}">Dirigentes</a></li>
+            <li><a href="{{ url_for('equipos_bp.view_equipos') }}">Equipos</a></li>
+            <li><a href="{{ url_for('jugadores_bp.view_jugadores') }}">Jugadores</a></li>
+            <li><a href="{{ url_for('pagos_bp.view_pagos') }}">Pagos</a></li>
+            <li><a href="{{ url_for('vendedores_bp.view_vendedores') }}">Vendedores</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

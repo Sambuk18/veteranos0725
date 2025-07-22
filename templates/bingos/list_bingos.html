@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lista de Bingos</h1>
+<!-- <a href="{{ url_for('bingos_bp.add_bingo') }}">Añadir Bingo</a> -->
+<table>
+    <thead>
+        <tr>
+            <th>Nro Cartón</th>
+            <!-- <th>ID</th> -->
+            <th>Fecha</th>
+            <!-- <th>Ubicación</th> -->
+            <th>DNI Vendedor</th>
+            <th>DNI Comprador</th>            
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bingo in bingos %}
+        <tr>
+            <td>{{ bingo.Nrocarton if bingo.Nrocarton else '' }}</td>
+            <!-- <td>{{ bingo.id_bingo }}</td> -->
+            <td>{{ bingo.fecha }}</td>
+            <!-- <td>{{ bingo.ubicacion }}</td> -->
+            <td>{{ bingo.DNI_vendedor }}</td>
+            <td>{{ bingo.DNI_comprador }}</td>
+            
+            <td>
+                <a href="{{ url_for('bingos_bp.edit_bingo', id=bingo.id_bingo) }}">Editar</a>
+                <form action="{{ url_for('bingos_bp.delete_bingo', id=bingo.id_bingo) }}" method="post" style="display:inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

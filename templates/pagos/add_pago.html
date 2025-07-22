@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Pago</h1>
+<form action="{{ url_for('pagos_bp.add_pago') }}" method="post">
+    <label for="DNI_jugador">DNI Jugador:</label>
+    <select name="DNI_jugador" id="DNI_jugador">
+        {% for jugador in jugadores %}
+        <option value="{{ jugador.DNI }}">{{ jugador.DNI }} - {{ jugador.nombre }} {{ jugador.apellido }}</option>
+        {% endfor %}
+    </select>
+    <label for="monto">Monto:</label>
+    <input type="text" name="monto" id="monto">
+    <label for="fecha_pago">Fecha Pago:</label>
+    <input type="date" name="fecha_pago" id="fecha_pago">
+    <label for="tipo_pago">Tipo Pago:</label>
+    <input type="text" name="tipo_pago" id="tipo_pago">
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}

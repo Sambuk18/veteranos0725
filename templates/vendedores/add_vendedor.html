@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Añadir Vendedor</h1>
+<form action="{{ url_for('vendedores_bp.add_vendedor') }}" method="post">
+    <label for="DNI">DNI:</label>
+    <input type="text" name="DNI" id="DNI">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido">
+    <label for="telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="telefono">
+    <button type="submit">Añadir</button>
+</form>
+{% endblock %}
